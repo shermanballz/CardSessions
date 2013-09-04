@@ -1,0 +1,129 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Test title</title> 
+	<link rel="stylesheet" type="text/css" href="card.css">
+	
+<script typ="javascript">
+
+
+  
+function notesopen(no)
+  {
+	 var noteno = 'notes' + no
+	 var sessionno = 'session' + no
+	 
+	 document.getElementById(noteno).style.webkitTransition='opacity 0.4s linear 0.2s'
+	 document.getElementById(sessionno).style.webkitTransition='height 0.2s ease-out 0s'
+	 document.getElementById(noteno).style.opacity='1';  
+	 document.getElementById(sessionno).style.height='165px';
+  }  
+  
+function notesclosed(no)
+  {
+	 var noteno = 'notes' + no
+	 var sessionno = 'session' + no
+	 
+	 document.getElementById(noteno).style.webkitTransition='opacity 0.2s linear 0s'
+	 document.getElementById(sessionno).style.webkitTransition='height 0.2s ease-out 0.2s'
+	 document.getElementById(noteno).style.opacity='0';  
+	 document.getElementById(sessionno).style.height='80px';
+  } 
+
+
+function closelable(no)
+  {
+	  var lableno = 'notelable' + no
+	  
+	  document.getElementById(lableno).style.opacity='0';
+  }
+
+
+</script>	
+	
+	
+</head> 
+
+	
+<body> 
+
+
+
+
+<div class="card" id="session1">
+<div class="sessionnumber">six</div>
+<div class="sessionselect">Session 1
+
+<select class="sessiontype">
+  
+<option value="select">select...</option>
+<option value="bj1">BJ1 8</option>
+<option value="bj2">BJ2 7</option>
+<option value="3card">3Card 6</option>
+
+</select></div>
+
+  <div class="start">
+    Start: <input type="time" 
+    			  name="stime1" 
+    			  id="stime1"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbank1"
+    	          id="sbank1"
+    	          class="banks">
+  </div>
+
+  <div class="end">
+    End: <input   type="time" 
+    			  name="stime1" 
+    			  id="stime1"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbank1"
+    	          id="sbank1"
+    	          class="banks">
+  </div>
+
+  
+  <div class="notes" id="notes1" onclick="closelable('1');">
+  <div class="noteslable" id="notelable1">notes</div>
+    <textarea></textarea>
+  </div>
+  
+  <div class="newsession">
+  
+  <input type="button" name="initial" value="+"
+  onclick="notesopen('1');">
+<input type="button" name="noteopen" value="-"
+  onclick="notesclosed('1');">
+  
+  </div>
+
+<div class="downarrowdiv">
+<svg class="downarrow3">
+  <polygon points="0,0 15,15 30,0"/>
+</svg>
+<svg class="downarrow2">
+  <polygon points="0,0 15,15 30,0"/>
+</svg>
+<svg class="downarrow1">
+  <polygon points="0,0 15,15 30,0"/>
+</svg>
+<svg class="downarrow">
+  <polygon points="0,0 15,15 30,0"/>
+</svg>
+</div>
+
+</div>
+
+
+
+
+</body>
+</html>
