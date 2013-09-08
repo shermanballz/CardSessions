@@ -3,35 +3,64 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> 
 	<title>Test title</title> 
 	<link rel="stylesheet" type="text/css" href="card.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,900' rel='stylesheet' type='text/css'>
+
 	
 <script typ="javascript">
 
 
+function bothtrans(elid,seteffect)
+  {
+	 	 document.getElementById(elid).style.webkitTransition=seteffect;
+	 document.getElementById(elid).style.transition=seteffect;
+  }
   
 function notesopen(no)
   {
 	 var noteno = 'notes' + no
 	 var sessionno = 'session' + no
+	 var upano = 'upa' + no
+	 var downano = 'downa' + no
 	 
-	 document.getElementById(noteno).style.webkitTransition='opacity 0.4s linear 0.2s'
-	 document.getElementById(sessionno).style.webkitTransition='height 0.2s ease-out 0s'
-	 document.getElementById(noteno).style.opacity='1';  
-	 document.getElementById(sessionno).style.height='165px';
+	 bothtrans(noteno,'opacity 0.4s linear 0.2s')
+     bothtrans(sessionno,'height 0.2s ease-out 0s, margin-bottom 0.2s ease-out 0s')
+	 
+	 document.getElementById(noteno).style.opacity='1';
+	   
+	 document.getElementById(sessionno).style.height='220px'; 
+	 document.getElementById(sessionno).style.marginBottom='10px';
+	 
+	 document.getElementById(upano).style.opacity='1';
+	 
+	 document.getElementById(downano).style.opacity='0';
   }  
-  
+    
 function notesclosed(no)
   {
 	 var noteno = 'notes' + no
 	 var sessionno = 'session' + no
+	 var upano = 'upa' + no
+	 var downano = 'downa' + no
 	 
-	 document.getElementById(noteno).style.webkitTransition='opacity 0.2s linear 0s'
-	 document.getElementById(sessionno).style.webkitTransition='height 0.2s ease-out 0.2s'
+	 bothtrans(noteno,'opacity 0.1s linear 0s')
+     bothtrans(sessionno,'height 0.2s ease-out 0.1s, margin-bottom 0.2s ease-out 0.1s')	 
+	 
+	 
+
 	 document.getElementById(noteno).style.opacity='0';  
-	 document.getElementById(sessionno).style.height='80px';
+	 
+	 document.getElementById(sessionno).style.height='120px';
+	 
+	 document.getElementById(upano).style.opacity='0';
+	 
+	 document.getElementById(downano).style.opacity='1';
+	 document.getElementById(sessionno).style.marginBottom='25px';
   } 
+
+
 
 
 function closelable(no)
@@ -41,6 +70,108 @@ function closelable(no)
 	  document.getElementById(lableno).style.opacity='0';
   }
 
+function tableswitch(on,off1,off2,session)
+  {
+      var tableon = session + 'table' + on
+      var tableoff1 = session + 'table' + off1
+      var tableoff2 = session + 'table' + off2
+	  document.getElementById(tableoff1).style.opacity='0'
+	  document.getElementById(tableoff2).style.opacity='0'
+	  document.getElementById(tableon).style.opacity='1'
+  }
+
+function tablesoff(no)
+  {
+  	var notable6 = no + 'table6'
+  	var notable7 = no + 'table7'
+  	var notable8 = no + 'table8'
+	  document.getElementById(notable6).style.opacity='0'
+	  document.getElementById(notable7).style.opacity='0'
+	  document.getElementById(notable8).style.opacity='0'
+  }
+  
+function tableno(no,session)
+  {
+	 if (no == '8')
+	  {
+	   	  tableswitch('8','7','6',session); 
+	  }
+	 else if (no == '7')
+	  {
+		  tableswitch('7','8','6',session);
+	  }
+	 else if (no == '6')
+	  {
+		  tableswitch('6','8','7',session);
+	  }
+	 else
+	  {
+		  tablesoff(session)
+	  }
+  }
+  
+  
+  
+function newsessionA(sessionid)
+  {
+  
+      var elid = 'session' + sessionid
+      var newsID = 'news' + sessionid
+      var cbID = 'cb' + sessionid
+      
+      
+	  
+	  document.getElementById(newsID).style.opacity='0'
+
+	  bothtrans(elid,'opacity 0.3s linear, left 0s ease-out, height 0.3s')  
+        
+	  document.getElementById(elid).style.left='100%'
+	  document.getElementById(elid).style.display='inline'
+
+	  document.getElementById(elid).style.opacity='1'
+	  
+	  
+	  setTimeout(function(){newsessionB(elid,cbID)}, 1);
+
+  }  
+  
+function newsessionB(elid,cbID)  
+  {
+  	  
+	  bothtrans(elid,'opacity 0.3s linear, left 0.3s ease-out, height 0.3s ease-out');
+	  
+	  document.getElementById(elid).style.opacity='1'
+	  document.getElementById(elid).style.left='0'
+	  
+	  
+	  document.getElementById(cbID).style.opacity='0'
+	  
+	  setTimeout(function(){cbDisplay(cbID)}, 400);
+  }
+  
+function cbDisplay(cbID)
+  {
+	  document.getElementById(cbID).style.display='none'
+  }  
+  
+  
+  
+function closer(no)
+  {   
+     var seID = 'session' + no
+      var newsID = 'news' + no
+      var cbID = 'cb' + no
+      
+      document.getElementById(newsID).style.opacity='1'
+      
+      
+      document.getElementById(seID).style.opacity='0'
+      document.getElementById(seID).style.left='-100%'
+      document.getElementById(cbID).style.display='inline'
+      document.getElementById(cbID).style.opacity='1'            
+  }  
+
+  
 
 </script>	
 	
@@ -52,75 +183,439 @@ function closelable(no)
 
 
 
+<div class="card" id="sessionONE" style="display:inline">
+<div class="tablenumber" id="ONEtable6">6</div>
+<div class="tablenumber" id="ONEtable7">7</div>
+<div class="tablenumber" id="ONEtable8">8</div>
 
-<div class="card" id="session1">
-<div class="sessionnumber">six</div>
-<div class="sessionselect">Session 1
 
-<select class="sessiontype">
+<select class="sessionselect" onchange="tableno(this.value,'ONE')">
   
-<option value="select">select...</option>
-<option value="bj1">BJ1 8</option>
-<option value="bj2">BJ2 7</option>
-<option value="3card">3Card 6</option>
+<option value="select">table...</option>
+<option value="8">BlackJack 1</option>
+<option value="7">BlackJack 2</option>
+<option value="6">Three Card Poker</option>
 
-</select></div>
+</select>
 
   <div class="start">
     Start: <input type="time" 
-    			  name="stime1" 
-    			  id="stime1"
+    			  name="stimeONE" 
+    			  id="stimeONE"
     			  class="times">
     			  
     	   <input type="number"
-    	          name="sbank1"
-    	          id="sbank1"
+    	          name="sbankONE"
+    	          id="sbankONE"
     	          class="banks">
   </div>
 
   <div class="end">
     End: <input   type="time" 
-    			  name="stime1" 
-    			  id="stime1"
+    			  name="stimeONE" 
+    			  id="stimeONE"
     			  class="times">
     			  
     	   <input type="number"
-    	          name="sbank1"
-    	          id="sbank1"
+    	          name="sbankONE"
+    	          id="sbankONE"
     	          class="banks">
   </div>
 
   
-  <div class="notes" id="notes1" onclick="closelable('1');">
-  <div class="noteslable" id="notelable1">notes</div>
+  <div class="notes" id="notesONE" onclick="closelable('ONE');">
+  <div class="noteslable" id="notelableONE">notes</div>
     <textarea></textarea>
   </div>
   
-  <div class="newsession">
   
-  <input type="button" name="initial" value="+"
-  onclick="notesopen('1');">
-<input type="button" name="noteopen" value="-"
-  onclick="notesclosed('1');">
+
+  
+  <div class="newsession" onclick="newsessionA('TWO')" id="newsTWO">
+  
+New Session
   
   </div>
 
-<div class="downarrowdiv">
-<svg class="downarrow3">
-  <polygon points="0,0 15,15 30,0"/>
+<div class="downarrowdiv" id="downaONE" onclick="notesopen('ONE');">
+<svg>
+   <polyline style="stroke:#c2c2c2;fill:white"
+  		     points="0,0 15,15 30,0"/>
+   <polyline style="stroke:#c8c8c8"
+     		 points="0,1 15,16 30,1"/>
+   <polyline style="stroke:#e0e0e0"
+             points="0,2 15,17 30,2"/>
 </svg>
-<svg class="downarrow2">
-  <polygon points="0,0 15,15 30,0"/>
-</svg>
-<svg class="downarrow1">
-  <polygon points="0,0 15,15 30,0"/>
-</svg>
-<svg class="downarrow">
-  <polygon points="0,0 15,15 30,0"/>
+</div>
+
+<div class="uparrowdiv" id="upaONE" onclick="notesclosed('ONE');">
+<svg>
+   <polyline style="stroke:#e0e0e0;fill:#e6e6e6"
+  			 points="0,17 15,2 30,17"/>
+   <polyline style="stroke:#c8c8c8"
+		     points="0,16 15,1 30,16"/>
+   <polyline style="stroke:#c2c2c2"
+		     points="0,15 15,0 30,15"/>
 </svg>
 </div>
 
 </div>
+
+
+
+
+
+
+
+<div class="card" id="sessionTWO">
+<div class="tablenumber" id="TWOtable6">6</div>
+<div class="tablenumber" id="TWOtable7">7</div>
+<div class="tablenumber" id="TWOtable8">8</div>
+
+<div class="closebox" id="cbTHREE" onclick="closer('TWO')">x</div>
+
+<select class="sessionselect" onchange="tableno(this.value,'TWO')">
+  
+<option value="select">table...</option>
+<option value="8">BlackJack 1</option>
+<option value="7">BlackJack 2</option>
+<option value="6">Three Card Poker</option>
+
+</select>
+
+  <div class="start">
+    Start: <input type="time" 
+    			  name="stimeTWO" 
+    			  id="stimeTWO"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankTWO"
+    	          id="sbankTWO"
+    	          class="banks">
+  </div>
+
+  <div class="end">
+    End: <input   type="time" 
+    			  name="stimeTWO" 
+    			  id="stimeTWO"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankTWO"
+    	          id="sbankTWO"
+    	          class="banks">
+  </div>
+
+  
+  <div class="notes" id="notesTWO" onclick="closelable('TWO');">
+  <div class="noteslable" id="notelableTWO">notes</div>
+    <textarea></textarea>
+  </div>
+  
+  
+
+  
+  
+  <div class="newsession" onclick="newsessionA('THREE')" id="newsTHREE">
+  
+New Session
+  
+  </div>
+
+<div class="downarrowdiv" id="downaTWO" onclick="notesopen('TWO');">
+<svg>
+   <polyline style="stroke:#c2c2c2;fill:white"
+  		     points="0,0 15,15 30,0"/>
+   <polyline style="stroke:#c8c8c8"
+     		 points="0,1 15,16 30,1"/>
+   <polyline style="stroke:#e0e0e0"
+             points="0,2 15,17 30,2"/>
+</svg>
+</div>
+
+<div class="uparrowdiv" id="upaTWO" onclick="notesclosed('TWO');">
+<svg>
+   <polyline style="stroke:#e0e0e0;fill:#e6e6e6"
+  			 points="0,17 15,2 30,17"/>
+   <polyline style="stroke:#c8c8c8"
+		     points="0,16 15,1 30,16"/>
+   <polyline style="stroke:#c2c2c2"
+		     points="0,15 15,0 30,15"/>
+</svg>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="card" id="sessionTHREE">
+<div class="tablenumber" id="THREEtable6">6</div>
+<div class="tablenumber" id="THREEtable7">7</div>
+<div class="tablenumber" id="THREEtable8">8</div>
+
+<div class="closebox" id="cbFOUR" onclick="closer('THREE')" style="z-index:75">x</div>
+
+<select class="sessionselect" onchange="tableno(this.value,'THREE')">
+  
+<option value="select">table...</option>
+<option value="8">BlackJack 1</option>
+<option value="7">BlackJack 2</option>
+<option value="6">Three Card Poker</option>
+
+</select>
+
+  <div class="start">
+    Start: <input type="time" 
+    			  name="stimeTHREE" 
+    			  id="stimeTHREE"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankTHREE"
+    	          id="sbankTHREE"
+    	          class="banks">
+  </div>
+
+  <div class="end">
+    End: <input   type="time" 
+    			  name="stimeTHREE" 
+    			  id="stimeTHREE"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankTHREE"
+    	          id="sbankTHREE"
+    	          class="banks">
+  </div>
+
+  
+  <div class="notes" id="notesTHREE" onclick="closelable('THREE');">
+  <div class="noteslable" id="notelableTHREE">notes</div>
+    <textarea></textarea>
+  </div>
+  
+  
+
+  
+  <div class="newsession" onclick="newsessionA('FOUR')" id="newsTWO">
+  
+New Session
+  
+  </div>
+  
+  
+  
+  
+
+<div class="downarrowdiv" id="downaTHREE" onclick="notesopen('THREE');">
+<svg>
+   <polyline style="stroke:#c2c2c2;fill:white"
+  		     points="0,0 15,15 30,0"/>
+   <polyline style="stroke:#c8c8c8"
+     		 points="0,1 15,16 30,1"/>
+   <polyline style="stroke:#e0e0e0"
+             points="0,2 15,17 30,2"/>
+</svg>
+</div>
+
+<div class="uparrowdiv" id="upaTHREE" onclick="notesclosed('THREE');">
+<svg>
+   <polyline style="stroke:#e0e0e0;fill:#e6e6e6"
+  			 points="0,17 15,2 30,17"/>
+   <polyline style="stroke:#c8c8c8"
+		     points="0,16 15,1 30,16"/>
+   <polyline style="stroke:#c2c2c2"
+		     points="0,15 15,0 30,15"/>
+</svg>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="card" id="sessionFOUR">
+<div class="tablenumber" id="FOURtable6">6</div>
+<div class="tablenumber" id="FOURtable7">7</div>
+<div class="tablenumber" id="FOURtable8">8</div>
+
+<select class="sessionselect" onchange="tableno(this.value,'FOUR')">
+  
+<option value="select">table...</option>
+<option value="8">BlackJack 1</option>
+<option value="7">BlackJack 2</option>
+<option value="6">Three Card Poker</option>
+
+</select>
+
+  <div class="start">
+    Start: <input type="time" 
+    			  name="stimeFOUR" 
+    			  id="stimeFOUR"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankFOUR"
+    	          id="sbankFOUR"
+    	          class="banks">
+  </div>
+
+  <div class="end">
+    End: <input   type="time" 
+    			  name="stimeFOUR" 
+    			  id="stimeFOUR"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankFOUR"
+    	          id="sbankFOUR"
+    	          class="banks">
+  </div>
+
+  
+  <div class="notes" id="notesFOUR" onclick="closelable('FOUR');">
+  <div class="noteslable" id="notelableFOUR">notes</div>
+    <textarea></textarea>
+  </div>
+  
+  
+
+  
+ <div class="newsession" onclick="newsessionA('FIVE')" id="newsTWO">
+  
+New Session
+  
+  </div>
+  
+  
+  
+  
+
+
+<div class="downarrowdiv" id="downaFOUR" onclick="notesopen('FOUR');">
+<svg>
+   <polyline style="stroke:#c2c2c2;fill:white"
+  		     points="0,0 15,15 30,0"/>
+   <polyline style="stroke:#c8c8c8"
+     		 points="0,1 15,16 30,1"/>
+   <polyline style="stroke:#e0e0e0"
+             points="0,2 15,17 30,2"/>
+</svg>
+</div>
+
+<div class="uparrowdiv" id="upaFOUR" onclick="notesclosed('FOUR');">
+<svg>
+   <polyline style="stroke:#e0e0e0;fill:#e6e6e6"
+  			 points="0,17 15,2 30,17"/>
+   <polyline style="stroke:#c8c8c8"
+		     points="0,16 15,1 30,16"/>
+   <polyline style="stroke:#c2c2c2"
+		     points="0,15 15,0 30,15"/>
+</svg>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="card" id="sessionFIVE">
+<div class="tablenumber" id="FIVEtable6">6</div>
+<div class="tablenumber" id="FIVEtable7">7</div>
+<div class="tablenumber" id="FIVEtable8">8</div>
+
+<select class="sessionselect" onchange="tableno(this.value,'FIVE')">
+  
+<option value="select">table...</option>
+<option value="8">BlackJack 1</option>
+<option value="7">BlackJack 2</option>
+<option value="6">Three Card Poker</option>
+
+</select>
+
+  <div class="start">
+    Start: <input type="time" 
+    			  name="stimeFIVE" 
+    			  id="stimeFIVE"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankFIVE"
+    	          id="sbankFIVE"
+    	          class="banks">
+  </div>
+
+  <div class="end">
+    End: <input   type="time" 
+    			  name="stimeFIVE" 
+    			  id="stimeFIVE"
+    			  class="times">
+    			  
+    	   <input type="number"
+    	          name="sbankFIVE"
+    	          id="sbankFIVE"
+    	          class="banks">
+  </div>
+
+  
+  <div class="notes" id="notesFIVE" onclick="closelable('FIVE');">
+  <div class="noteslable" id="notelableFIVE">notes</div>
+    <textarea></textarea>
+  </div>
+  
+  
+
+  
+ <div class="newsession" onclick="newsessionA('SIX')" id="newsTWO">
+  
+New Session
+  
+  </div>
+  
+  
+  
+  
+
+
+<div class="downarrowdiv" id="downaFIVE" onclick="notesopen('FIVE');">
+<svg>
+   <polyline style="stroke:#c2c2c2;fill:white"
+  		     points="0,0 15,15 30,0"/>
+   <polyline style="stroke:#c8c8c8"
+     		 points="0,1 15,16 30,1"/>
+   <polyline style="stroke:#e0e0e0"
+             points="0,2 15,17 30,2"/>
+</svg>
+</div>
+
+<div class="uparrowdiv" id="upaFIVE" onclick="notesclosed('FIVE');">
+<svg>
+   <polyline style="stroke:#e0e0e0;fill:#e6e6e6"
+  			 points="0,17 15,2 30,17"/>
+   <polyline style="stroke:#c8c8c8"
+		     points="0,16 15,1 30,16"/>
+   <polyline style="stroke:#c2c2c2"
+		     points="0,15 15,0 30,15"/>
+</svg>
+</div>
+
+</div>
+
+
+
+
+
 
 
 
